@@ -2,4 +2,4 @@
 mine/undoStack
 *.so
 *.o
-main
+*main

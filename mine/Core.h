@@ -10,7 +10,7 @@ class Core{
         static Core * instance;
         Core()= default;
 
-        int maxUndoAmount = 7;
+        int maxUndoAmount = 3;
         //Always modulo 5, to allow for max 5 states saved.
         //0 = a, 1 = b, 2 = c, 3 = d, 4 = e
         int nextSaveFile = 0;

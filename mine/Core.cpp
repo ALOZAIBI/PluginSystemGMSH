@@ -147,8 +147,8 @@ void Core::saveState(bool updatePosition) {
     }
 
 
-    //Update the position in the stack
-    if(updatePosition && positionInStack < maxUndoAmount){
+    //Update the position in the stack if my position is not the last element
+    if(updatePosition && positionInStack < maxUndoAmount -1){
         positionInStack++;
     }
 
@@ -156,7 +156,7 @@ void Core::saveState(bool updatePosition) {
     if(undoStack.size()< maxUndoAmount)
         undoStack.push_back(prefix);
     else{
-    //If the stack is full, remove the oldest element
+        //If the stack is full, remove the oldest element
         undoStack.pop_front();
         undoStack.push_back(prefix);
     }
