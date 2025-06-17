@@ -59,94 +59,100 @@ float Core::takeFloat(std::string msg) {
 
 void Core::printStack() {
     //Print the current position in the stack
-    std::cout << "Undo Stack" <<" Current Position" << positionInStack << std::endl;
-    int counter = 0;
     for (int i = 0; i<= undoStack.size(); i++) {
         if(i < undoStack.size())
             std::cout << undoStack[i] ;
-        if(counter == positionInStack){
-            std::cout << "   <--";
+        if(i == positionInStack){
+            std::cout << "   <--Curr";
         }
+        else if(i == positionInStack + 1 && positionInStack + 1 < undoStack.size()){
+            std::cout << "   <--Redo";
+        }
+        else if(i == positionInStack - 1){
+            std::cout << "   <--Undo";
+        }
+
         std::cout << std::endl;
-        counter++;
     }
     std::cout << std::endl;
 }
 
 //Loads the previous state
 void Core::undo(){
-    if(positionInStack <= 0){
+    //Previous state is before my current position
+    int undoPosition = positionInStack - 1;
+    if(undoPosition < 0){
         return;
     }
-    if(positionInStack > undoStack.size()){
-        positionInStack = undoStack.size() - 1;
-    }
-    else
-        positionInStack--;
 
-    std::cout << "loading state " << undoStack[positionInStack] << endl;
+    std::cout << "loading state " << undoStack[undoPosition] << endl;
 
-    char prefix = undoStack[positionInStack];
+    char prefix = undoStack[undoPosition];
     gmsh::open(string("undoStack/")+ prefix+".geo_unrolled");
     gmsh::merge(string("undoStack/")+ prefix+".msh");
 
     //Next save file will be the one after the current position
-    nextSaveFile = (prefix - 'a' + 1) % maxUndoAmount; 
+    // nextSaveFile = (prefix - 'a' + 1) % maxUndoAmount; 
     
     //Draw the model
     gmsh::graphics::draw();
     
+    //Update my position to the previous state
+    positionInStack = undoPosition;
+
     printStack();
+
 }
 
 void Core::redo(){
-    if(positionInStack >= maxUndoAmount -1 || (positionInStack+1 > undoStack.size())){
+    int redoPosition = positionInStack + 1;
+
+    if(redoPosition >= undoStack.size()){
         return;
     }
 
-    positionInStack++;
 
-    std::cout << "loading state " << undoStack[positionInStack] << endl;
+    std::cout << "loading state " << undoStack[redoPosition] << endl;
 
-    char prefix = undoStack[positionInStack];
+    char prefix = undoStack[redoPosition];
     gmsh::open(string("undoStack/")+ prefix+".geo_unrolled");
     gmsh::merge(string("undoStack/")+ prefix+".msh");
 
     //Next save file will be the one after the current position
-    nextSaveFile = (prefix - 'a' + 1) % maxUndoAmount; 
+    // nextSaveFile = (prefix - 'a' + 1) % maxUndoAmount; 
 
     //Draw the model
     gmsh::graphics::draw();
 
+    //Update my position to the next state
+    positionInStack = redoPosition;
     printStack();
     
 }
 
-void Core::saveState(){
-    //When you save and not in the last position, remove all saves after the current position
-    if(positionInStack < undoStack.size()){
-        cout << "Removing all saves after position " << positionInStack << endl;
-        //Remove all saves after the current position
-        undoStack.erase(undoStack.begin() + positionInStack+1, undoStack.end());
-        
-        // positionInStack++;
-    }
-    
+void Core::saveState(bool updatePosition) {
     char prefix = 'a' + nextSaveFile;
+    // nextSaveFile = (nextSaveFile + 1) % maxUndoAmount;
+    nextSaveFile++;
     cout << "STATE SAVED AT " << prefix << endl;
-    
 
-
+    //Saves the state as files
     gmsh::write(string("undoStack/")+ prefix+".geo_unrolled");
     gmsh::write(string("undoStack/")+ prefix+".msh");
 
+    //If this isn't the most recent position in the stack, we remove all elements after it
+    if(positionInStack < (int)undoStack.size() - 1){
+        //Remove all elements after the current position
+        undoStack.erase(undoStack.begin() + positionInStack + 1, undoStack.end());
+    }
+
 
     //Update the position in the stack
-    if(positionInStack < maxUndoAmount){
+    if(updatePosition && positionInStack < maxUndoAmount){
         positionInStack++;
     }
 
-        //Saves the name of the prefix to the undo stack
+    //Saves the name of the file save to the undo stack
     if(undoStack.size()< maxUndoAmount)
         undoStack.push_back(prefix);
     else{
@@ -155,10 +161,7 @@ void Core::saveState(){
         undoStack.push_back(prefix);
     }
 
-
-
     fflush(stdout);
-    nextSaveFile = (nextSaveFile + 1) % maxUndoAmount;
 
     printStack();
 
@@ -186,7 +189,8 @@ void Core::loop(){
     gmsh::option::setNumber("General.ColorScheme",3);
 
     //Save initially when opening the program
-    saveState();
+    //But remain in the initial state
+    saveState(false);
     
         
     while (true) {

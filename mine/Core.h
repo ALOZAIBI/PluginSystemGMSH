@@ -15,12 +15,16 @@ class Core{
         //0 = a, 1 = b, 2 = c, 3 = d, 4 = e
         int nextSaveFile = 0;
 
+        //currentPosition in the stack
+        //Undo position is position in stack -1
+        //Redo position is position in stack +1
         int positionInStack = 0;
 
         //For debugging
         void printStack();
     public:
-        void saveState();
+        //The first time we save the state on program start, we don't want to update the position
+        void saveState(bool updatePosition = true);
         static Core * getInstance();
         void loop();
         std::deque<char> undoStack;

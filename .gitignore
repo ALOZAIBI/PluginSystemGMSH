@@ -1,4 +1,5 @@
 /build
-/undoStack
+mine/undoStack
 *.so
 *.o
+main
