@@ -118,9 +118,6 @@ void Core::redo(){
     gmsh::open(string("undoStack/")+ prefix+".geo_unrolled");
     gmsh::merge(string("undoStack/")+ prefix+".msh");
 
-    //Next save file will be the one after the current position
-    // nextSaveFile = (prefix - 'a' + 1) % maxUndoAmount; 
-
     //Draw the model
     gmsh::graphics::draw();
 
@@ -135,11 +132,8 @@ void Core::saveState(bool initialCall) {
     if(initialCall){
         prefix = 'a';
     }else{
-        // prefix = 'a' + nextSaveFile;
         prefix = 'a' + (((undoStack[positionInStack] + 1)- 'a') % maxUndoAmount);
     }
-
-    nextSaveFile = (nextSaveFile + 1) % maxUndoAmount;
 
     cout << "STATE SAVED AT " << prefix << endl;
 

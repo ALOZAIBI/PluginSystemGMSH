@@ -7,28 +7,39 @@
 
 class Core{
     private:
+
         static Core * instance;
         Core()= default;
 
+        //Limit of number of undo states to keep
         int maxUndoAmount = 7;
-        //Always modulo 5, to allow for max 5 states saved.
-        //0 = a, 1 = b, 2 = c, 3 = d, 4 = e
-        int nextSaveFile = 0;
 
-        //currentPosition in the stack
-        //Undo position is position in stack -1
-        //Redo position is position in stack +1
+
+        /**
+         * @brief Current position in the undo stack.
+         * @note Other:
+         * 
+         * - undoPosition is positionInStack - 1
+         * 
+         * - redoPosition is positionInStack + 1
+        */
         int positionInStack = 0;
 
-        //For debugging
+        /**
+         * @brief Displays the undo stack, showing the current,undo, and redo positions.
+        */
         void printStack();
     public:
-        //The first time we save the state on program start(initial call)
-        //We don't want to update the position
-        //We initialize first save file prefix to a
+        /**
+         * @brief Saves the current state and adds it to undoStack.
+         * @param initialCall If true, set the initial savePrefix to 'a'. And keep the position in the stack unchanged.
+        */
         void saveState(bool initialCall = false);
         static Core * getInstance();
         void loop();
+        /**
+         * @brief Holds the different saves.
+        */
         std::deque<char> undoStack;
 
         int takeInt(std::string msg="");
