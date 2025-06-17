@@ -1,0 +1,4 @@
+/build
+/undoStack
+*.so
+*.o

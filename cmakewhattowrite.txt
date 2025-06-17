@@ -1,0 +1,2 @@
+cmake ..   -DCMAKE_BUILD_TYPE=Release   -DENABLE_OCC=ON   -DCMAKE_PREFIX_PATH=/opt/opencascade
+
