@@ -130,10 +130,17 @@ void Core::redo(){
     
 }
 
-void Core::saveState(bool updatePosition) {
-    char prefix = 'a' + nextSaveFile;
-    // nextSaveFile = (nextSaveFile + 1) % maxUndoAmount;
-    nextSaveFile++;
+void Core::saveState(bool initialCall) {
+    char prefix;
+    if(initialCall){
+        prefix = 'a';
+    }else{
+        // prefix = 'a' + nextSaveFile;
+        prefix = 'a' + (((undoStack[positionInStack] + 1)- 'a') % maxUndoAmount);
+    }
+
+    nextSaveFile = (nextSaveFile + 1) % maxUndoAmount;
+
     cout << "STATE SAVED AT " << prefix << endl;
 
     //Saves the state as files
@@ -148,7 +155,7 @@ void Core::saveState(bool updatePosition) {
 
 
     //Update the position in the stack if my position is not the last element
-    if(updatePosition && positionInStack < maxUndoAmount -1){
+    if(!initialCall && positionInStack < maxUndoAmount -1){
         positionInStack++;
     }
 
@@ -188,9 +195,8 @@ void Core::loop(){
     gmsh::option::setNumber("General.FltkColorScheme",1);
     gmsh::option::setNumber("General.ColorScheme",3);
 
-    //Save initially when opening the program
-    //But remain in the initial state
-    saveState(false);
+    //Initial save
+    saveState(true);
     
         
     while (true) {

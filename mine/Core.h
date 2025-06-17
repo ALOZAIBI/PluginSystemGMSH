@@ -10,7 +10,7 @@ class Core{
         static Core * instance;
         Core()= default;
 
-        int maxUndoAmount = 3;
+        int maxUndoAmount = 7;
         //Always modulo 5, to allow for max 5 states saved.
         //0 = a, 1 = b, 2 = c, 3 = d, 4 = e
         int nextSaveFile = 0;
@@ -23,8 +23,10 @@ class Core{
         //For debugging
         void printStack();
     public:
-        //The first time we save the state on program start, we don't want to update the position
-        void saveState(bool updatePosition = true);
+        //The first time we save the state on program start(initial call)
+        //We don't want to update the position
+        //We initialize first save file prefix to a
+        void saveState(bool initialCall = false);
         static Core * getInstance();
         void loop();
         std::deque<char> undoStack;
