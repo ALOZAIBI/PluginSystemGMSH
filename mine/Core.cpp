@@ -5,6 +5,7 @@
 #include <thread>
 #include <mutex>
 #include <fstream>
+#include "TerminalColors.h"
 
 //So that we have a separate thread for handling input
 struct args{
@@ -37,23 +38,26 @@ Core* Core::getInstance() {
 
 
 int Core::takeInt(std::string msg) {
-    std::cout << msg;
+    std::cout << BOLDWHITE << msg << BLUE;
     int num;
     std::cin >> num;
+    std::cout << RESET;
     return num;
 }
 
 std::string Core::takeString(std::string msg) {
-    std::cout << msg;
+    std::cout << BOLDWHITE << msg << BLUE;
     std::string str;
     std::cin >> str;
+    std::cout << RESET;
     return str;
 }
 
 float Core::takeFloat(std::string msg) {
-    std::cout << msg;
+    std::cout << BOLDWHITE << msg << BLUE;
     float num;
     std::cin >> num;
+    std::cout << RESET;
     return num;
 }
 
@@ -63,24 +67,24 @@ void Core::printStack() {
         if(i < undoStack.size())
             std::cout << undoStack[i] ;
         if(i == positionInStack){
-            std::cout << "   <--Curr";
+            std::cout << WHITE << "   <--Curr" << RESET;
         }
         else if(i == positionInStack + 1 && positionInStack + 1 < undoStack.size()){
-            std::cout << "   <--Redo";
+            std::cout << DARKGREEN << "   <--Redo" << RESET;
         }
         else if(i == positionInStack - 1){
-            std::cout << "   <--Undo";
+            std::cout << DARKRED << "   <--Undo" << RESET;
         }
 
         std::cout << std::endl;
     }
-    std::cout << std::endl;
+    std::cout << RESET << std::endl;
 }
 
 //Loads the previous state
 void Core::undo(){
-    //Previous state is before my current position
     int undoPosition = positionInStack - 1;
+    //Nothing to undo
     if(undoPosition < 0){
         return;
     }
@@ -88,6 +92,7 @@ void Core::undo(){
     std::cout << "loading state " << undoStack[undoPosition] << endl;
 
     char prefix = undoStack[undoPosition];
+    //Opens the save file
     gmsh::open(string("undoStack/")+ prefix+".geo_unrolled");
     gmsh::merge(string("undoStack/")+ prefix+".msh");
 
@@ -107,15 +112,17 @@ void Core::undo(){
 void Core::redo(){
     int redoPosition = positionInStack + 1;
 
+    //Nothing to redo
     if(redoPosition >= undoStack.size()){
         return;
     }
 
 
     std::cout << "loading state " << undoStack[redoPosition] << endl;
-
-    char prefix = undoStack[redoPosition];
-    gmsh::open(string("undoStack/")+ prefix+".geo_unrolled");
+ 
+    char prefix = undoStack[redoPosition]; 
+    //Opens the save file
+    gmsh::open(string("undoStack/")+ prefix+".geo_unrolled"); 
     gmsh::merge(string("undoStack/")+ prefix+".msh");
 
     //Draw the model
@@ -135,7 +142,7 @@ void Core::saveState(bool initialCall) {
         prefix = 'a' + (((undoStack[positionInStack] + 1)- 'a') % maxUndoAmount);
     }
 
-    cout << "STATE SAVED AT " << prefix << endl;
+    cout <<"STATE SAVED AT " << prefix << endl;
 
     //Saves the state as files
     gmsh::write(string("undoStack/")+ prefix+".geo_unrolled");

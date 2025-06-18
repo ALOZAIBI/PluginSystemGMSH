@@ -1,4 +1,5 @@
 #include "PluginManager.h"
+#include "TerminalColors.h"
 #include "types.hpp"
 #include "Core.h"
 #include "dlfcn.h"
@@ -35,7 +36,7 @@ vector<string> PluginManager::viewPlugins() {
     int count = 0;
     for (const string& filename : filenames) {
         count++;
-        cout << count << ". " << filename << endl;
+        cout << YELLOW << count << RESET << ". " << filename << endl;
     }
     return filenames;
 }
@@ -164,7 +165,7 @@ void PluginManager::importPlugin(){
 void PluginManager::viewFunctions(){
     cout << "Functions:" << endl;
     for (const auto& [name, signature] : functionMap) {
-        cout << name << ", Return Type: " << signature->returnType << endl;
+        cout << YELLOW << name  << RESET << ", Return Type: " << signature->returnType << endl;
         cout << "Parameter Types: ";
         for (const auto& type : signature->paramTypes) {
             if (type == &ffi_type_sint) {

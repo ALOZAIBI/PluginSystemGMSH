@@ -17,8 +17,7 @@ class Core{
 
         /**
          * @brief Current position in the undo stack.
-         * @note Other:
-         * 
+         * @note           
          * - undoPosition is positionInStack - 1
          * 
          * - redoPosition is positionInStack + 1
@@ -32,7 +31,7 @@ class Core{
     public:
         /**
          * @brief Saves the current state and adds it to undoStack.
-         * @param initialCall If true, set the initial savePrefix to 'a'. And keep the position in the stack unchanged.
+         * @param initialCall If true, set the initial save prefix to 'a'. And keep the position in the stack unchanged.
         */
         void saveState(bool initialCall = false);
         static Core * getInstance();
@@ -45,6 +44,7 @@ class Core{
         int takeInt(std::string msg="");
         std::string takeString(std::string msg="");
         float takeFloat(std::string msg="");
+
 
         void undo();
         void redo();
