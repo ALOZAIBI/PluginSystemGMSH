@@ -24,7 +24,6 @@ PluginManager *PluginManager::getInstance() {
 
 vector<string> PluginManager::viewPlugins() {
     vector<string> filenames;
-    cout << "PathTOPLUGINS:" << pathToPlugins << endl;
     if (fs::exists(pathToPlugins) && fs::is_directory(pathToPlugins)) {
         for (const auto& entry : fs::directory_iterator(pathToPlugins)) {
             if (fs::is_regular_file(entry.status())) {
@@ -32,7 +31,6 @@ vector<string> PluginManager::viewPlugins() {
             }
         }
     }
-    cout << "-------------------------" << endl;
     int count = 0;
     for (const string& filename : filenames) {
         count++;
@@ -90,8 +88,6 @@ void PluginManager::fetchFunctions(void* handle) {
     try {
         //Get the function signatures in json format
         j = json::parse(getFunctions());
-        //print number of functions
-        cout << "Number of functions: " << j["functions"].size() << endl;
     } catch (const std::exception& e) {
         cerr << "Error parsing JSON: " << e.what() << endl;
         return;
@@ -156,7 +152,6 @@ void PluginManager::importPlugin(){
         return;
     }
 
-    cout << "Selected plugin: " << filenames[num - 1] << endl;
 
     string pluginPath = pathToPlugins + filenames[num - 1];
     void* handle = dlopen(pluginPath.c_str(), RTLD_LAZY);
@@ -181,19 +176,27 @@ void PluginManager::viewFunctions(){
     cout << "Functions:" << endl;
     for (const auto& [name, signature] : functionMap) {
         cout << YELLOW << name  << RESET << ", Return Type: " << signature->returnType << endl;
-        cout << "Parameter Types: ";
+        //If the function has parameters we print them
+        if (!signature->paramTypes.empty()) {
+            cout << "parameters: ";
+        }
+        int count = 0;
         for (const auto& type : signature->paramTypes) {
             if (type == &ffi_type_sint) {
-                cout << "int ";
+                cout << signature->paramNames[count] << " (int) ";
             } else if (type == &ffi_type_float) {
-                cout << "float ";
+                cout  << signature->paramNames[count] << " (float) ";
             } else if (type == &ffi_type_void) {
-                cout << "void ";
+                cout <<  signature->paramNames[count] << " (void) ";
             } else {
-                cout << "unknown ";
+                cout <<"unknown ";
             }
+            count++;
         }
-        cout << endl <<"---------------"<< endl;
+        if (!signature->paramTypes.empty()) {
+            cout << endl;
+        }
+        cout<< endl; 
     }
 }
 

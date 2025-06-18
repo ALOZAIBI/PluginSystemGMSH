@@ -13,7 +13,7 @@ std::string getFunctions() {
         {
             "functions":[
                 {"name": "setStartTime", "returns":"void", "args":[],"event":[], "description":"Sets the start time"},
-                {"name": "elapsedTime", "returns":"void", "args":[],"event":["onView"], "description":"Prints the elapsed time since start"}
+                {"name": "elapsedTime", "returns":"void", "args":[],"event":["onInput"], "description":"Prints the elapsed time since start"}
             ]
         }
     )";

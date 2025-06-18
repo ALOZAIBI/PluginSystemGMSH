@@ -3,8 +3,8 @@
 #include "Plugin.h"
 
 extern "C"{
-    void addBox();
-    void addBoxS(float width,float height);
+    void addRect();
+    void addRectWH(float width,float height);
     void addCone();
 }
 #endif

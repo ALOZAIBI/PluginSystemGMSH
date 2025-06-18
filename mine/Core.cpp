@@ -20,7 +20,9 @@ void inputHandler(args* a){
         if(!*a->ready){
             std::lock_guard<std::mutex> lock(*a->mtx);
             a->input->clear(); // Clear previous input
-            *a->input = Core::getInstance()->takeString("1.Plugin Function, 2.Import Plugin 3.Save State 4.Undo 5.Redo|");
+            //Trigger the onInput event
+            PluginManager::getInstance()->callEventFunctions("onInput");
+            *a->input = Core::getInstance()->takeString("--------------------------------------\n1.Plugin Function, 2.Import Plugin 3.Save State 4.Undo 5.Redo|");
             //Mark the flag as ready
             *a->ready = true;
         }
