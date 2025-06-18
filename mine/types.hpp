@@ -15,6 +15,8 @@ struct functionSignature{
     std::vector<ffi_type*> paramTypes;
     //The parameter values
     std::vector<void*> paramValues;
+    //Parameter names
+    std::vector<std::string> paramNames;
     //The return buffer
     ffi_arg retBuffer;
     //The dataType of the return

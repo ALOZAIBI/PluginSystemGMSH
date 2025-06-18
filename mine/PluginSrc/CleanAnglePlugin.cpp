@@ -10,7 +10,7 @@ std::string getFunctions() {
     return R"(
         {
             "functions":[
-                {"name": "cleanAngle", "returns":"void", "args":["float","float"],"event":[], "description":"Clean angles in the model"}
+                {"name": "cleanAngle", "returns":"void", "args":["float","float"],"argNames":["Min Angle","Max Angle"],"event":[], "description":"Clean angles in the model"}
             ]
         }
     )";

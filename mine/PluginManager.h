@@ -34,6 +34,8 @@ class PluginManager{
 
         vector<ffi_type*> fetchParamTypes(const json& jFunction);
         
+        vector<string> fetchParamNames(const json& jFunction);
+        
     public:
         static PluginManager* getInstance();
 

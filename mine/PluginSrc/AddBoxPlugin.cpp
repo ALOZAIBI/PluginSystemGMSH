@@ -7,7 +7,7 @@ std::string getFunctions(){
         {
             "functions":[
                 {"name": "addBox", "returns":"void", "args":[],"event":[], "description":""},
-                {"name": "addBoxS", "returns":"void", "args":["float","float"],"event":[], "description":""},
+                {"name": "addBoxS", "returns":"void", "args":["float","float"], "argNames":["Width","Height"],"event":[], "description":""},
                 {"name": "addCone", "returns":"void", "args":[],"event":[], "description":""}
             ]
         }

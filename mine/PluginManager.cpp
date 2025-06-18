@@ -70,6 +70,18 @@ vector <ffi_type*> PluginManager::fetchParamTypes(const json& jFunction) {
     }
     return types;
 }
+vector <string> PluginManager::fetchParamNames(const json& jFunction) {
+    //Check If the function provides parameter names
+    if(jFunction.contains("argNames") == false){
+        return vector<string>(); // Return an empty vector if no names are provided
+    }
+    int numParamNames = jFunction["argNames"].size();
+    vector<string> names(numParamNames);
+    for (int i = 0; i < numParamNames; ++i) {
+        names[i] = jFunction["argNames"][i].get<string>();
+    }
+    return names;
+}
 
 void PluginManager::fetchFunctions(void* handle) {
     //Get the getFunctions function from the plugin
@@ -91,6 +103,9 @@ void PluginManager::fetchFunctions(void* handle) {
         sign->paramTypes = fetchParamTypes(jFunc);
         //The values will be set when the function is called
         sign->paramValues = vector<void*>(sign->paramTypes.size());
+
+        //Get param names
+        sign->paramNames = fetchParamNames(jFunc);
 
         sign->function = (void(*)())dlsym(handle, jFunc["name"].get<string>().c_str());
         if (!sign->function) {
@@ -233,11 +248,12 @@ retVariant PluginManager::callFunction() {
     shared_ptr<functionSignature> signature = functionMap[chosen];
     //Foreach parameter, take the value from the user
     for (size_t i = 0; i < signature->paramTypes.size(); ++i) {
+        string paramName = (i < signature->paramNames.size()) ? signature->paramNames[i] : "Parameter " + std::to_string(i + 1);
         if (signature->paramTypes[i] == &ffi_type_sint) {
-            value = Core::getInstance()->takeInt("Enter value for parameter " + std::to_string(i + 1) + ": ");
+            value = Core::getInstance()->takeInt("Enter value for " + paramName + ": ");
             signature->paramValues[i] = new int(value); // Allocate memory for the int
         } else if (signature->paramTypes[i] == &ffi_type_float) {
-            float value = Core::getInstance()->takeFloat("Enter value for parameter " + std::to_string(i + 1) + ": ");
+            float value = Core::getInstance()->takeFloat("Enter value for " + paramName + ": ");
             signature->paramValues[i] = new float(value); // Allocate memory for the float
         } else if (signature->paramTypes[i] == &ffi_type_void) {
             signature->paramValues[i] = nullptr; // No parameters for void functions
