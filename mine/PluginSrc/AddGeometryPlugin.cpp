@@ -19,21 +19,56 @@ void initializePlugin(){
 }
 
 void addRectWH(float width,float height){
-    gmsh::model::occ::addRectangle(0, 0, 0, width, height);
+    double lc = 1e-2;
+    int p1 = gmsh::model::geo::addPoint(0, 0, 0, lc);
+    int p2 = gmsh::model::geo::addPoint(width, 0, 0, lc);
+    int p3 = gmsh::model::geo::addPoint(width, height, 0, lc);
+    int p4 = gmsh::model::geo::addPoint(0, height, 0, lc);
+    
 
-    gmsh::model::occ::synchronize();
+    int l1 = gmsh::model::geo::addLine(p1, p2);
+    int l2 = gmsh::model::geo::addLine(p3, p2);
+    int l3 = gmsh::model::geo::addLine(p3, p4);
+    int l4 = gmsh::model::geo::addLine(p4, p1);
 
+
+    gmsh::model::geo::addCurveLoop({l4, l1, -l2, l3});
+
+    
+    gmsh::model::geo::addPlaneSurface({1});
+    
+    gmsh::model::geo::synchronize();
+    
     gmsh::graphics::draw();
-}
+    }
 
 void addRect(){
+    double lc = 1e-2;
+  int p1 = gmsh::model::geo::addPoint(0, 0, 0, lc);
+  int p2 = gmsh::model::geo::addPoint(.1, 0, 0, lc);
+  int p3 = gmsh::model::geo::addPoint(.1, .3, 0, lc);
 
-    gmsh::model::occ::addRectangle(0, 0, 0, 0.1, 0.3);
 
-    gmsh::model::occ::synchronize();
+  int p4 = gmsh::model::geo::addPoint(0, .3, 0, lc);
 
-    gmsh::graphics::draw();
+
+  int l1 = gmsh::model::geo::addLine(p1, p2);
+  int l2 = gmsh::model::geo::addLine(p3, p2);
+  int l3 = gmsh::model::geo::addLine(p3, p4);
+  int l4 = gmsh::model::geo::addLine(p4, p1);
+
+
+  gmsh::model::geo::addCurveLoop({l4, l1, -l2, l3});
+
+
+  gmsh::model::geo::addPlaneSurface({1});
+
+
+  gmsh::model::geo::synchronize();
+
+  gmsh::graphics::draw();
 }
+
 
 void addCone(){
     // Otherwise, create and mesh a simple geometry
