@@ -183,9 +183,12 @@ void Core::loop(){
     a.mtx = std::make_shared<std::mutex>();
     a.ready = std::make_shared<bool>(false);
 
-    std::thread inputThread(inputHandler, &a);
 
     gmsh::initialize();
+
+    //To not print too much in the terminal
+    //For cleaner output
+    gmsh::option::setNumber("General.Verbosity", 2);
 
 
     gmsh::option::setNumber("Geometry.PointLabels",1);
@@ -199,7 +202,10 @@ void Core::loop(){
     //Initial save
     saveState(true);
     
-        
+    //Just to trigger this output X_ChangeProperty: BadValue (integer parameter out of range for operation) 0x0
+    //Before taking input for a cleaner output
+    gmsh::fltk::wait(.01);
+    std::thread inputThread(inputHandler, &a);
     while (true) {
         gmsh::fltk::wait(.01);
         if (*a.ready) {
