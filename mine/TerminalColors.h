@@ -1,6 +1,6 @@
 //the following are UBUNTU/LINUX, and MacOS ONLY terminal color codes.
-#define RESET   "\033[37m"      //"\033[0m"
-#define BLACK   "\033[30m"      /* Black */
+#define RESET   "\033[0m"       //"\033[37m"      
+#define BLACK   "\033[37m"      /* Black */ //"\033[30m" 
 #define RED     "\033[31m"      /* Red */
 #define GREEN   "\033[32m"      /* Green */
 //For input options
@@ -14,7 +14,7 @@
 #define DARKRED "\033[38;5;124m"      /* Dark Red */
 #define DARKGREEN "\033[38;5;22m"      /* Dark Green */
 
-#define BOLDBLACK   "\033[1m\033[30m"      /* Bold Black */
+#define BOLDBLACK   "\033[1m\033[37m"      /* Bold Black */ //"\033[1m\033[30m"
 #define BOLDRED     "\033[1m\033[31m"      /* Bold Red */
 #define BOLDGREEN   "\033[1m\033[32m"      /* Bold Green */
 #define BOLDYELLOW  "\033[1m\033[33m"      /* Bold Yellow */

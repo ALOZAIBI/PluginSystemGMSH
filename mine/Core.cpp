@@ -40,7 +40,7 @@ Core* Core::getInstance() {
 
 
 int Core::takeInt(std::string msg) {
-    std::cout << BOLDWHITE << msg << BLUE;
+    std::cout << BOLDBLACK << msg << BLUE;
     int num;
     std::cin >> num;
     std::cout << RESET;
@@ -48,7 +48,7 @@ int Core::takeInt(std::string msg) {
 }
 
 std::string Core::takeString(std::string msg) {
-    std::cout << BOLDWHITE << msg << BLUE;
+    std::cout << BOLDBLACK << msg << BLUE;
     std::string str;
     std::cin >> str;
     std::cout << RESET;
@@ -56,7 +56,7 @@ std::string Core::takeString(std::string msg) {
 }
 
 float Core::takeFloat(std::string msg) {
-    std::cout << BOLDWHITE << msg << BLUE;
+    std::cout << BOLDBLACK << msg << BLUE;
     float num;
     std::cin >> num;
     std::cout << RESET;
@@ -69,7 +69,7 @@ void Core::printStack() {
         if(i < undoStack.size())
             std::cout << undoStack[i] ;
         if(i == positionInStack){
-            std::cout << WHITE << "   <--Curr" << RESET;
+            std::cout << BLACK << "   <--Curr" << RESET;
         }
         else if(i == positionInStack + 1 && positionInStack + 1 < undoStack.size()){
             std::cout << DARKGREEN << "   <--Redo" << RESET;
@@ -193,13 +193,13 @@ void Core::loop(){
     gmsh::option::setNumber("General.Verbosity", 2);
 
 
-    gmsh::option::setNumber("Geometry.PointLabels",1);
-    gmsh::option::setNumber("Geometry.CurveLabels",1);
+    // gmsh::option::setNumber("Geometry.PointLabels",1);
+    // gmsh::option::setNumber("Geometry.CurveLabels",1);
     // gmsh::option::setNumber("Mesh.NodeLabels",1);
     
-    gmsh::option::setNumber("Mesh.SurfaceLabels",1);
+    // gmsh::option::setNumber("Mesh.SurfaceLabels",1);
     gmsh::option::setNumber("General.FltkColorScheme",1);
-    gmsh::option::setNumber("General.ColorScheme",3);
+    gmsh::option::setNumber("General.ColorScheme",1);
 
     //Initial save
     saveState(true);

@@ -69,6 +69,7 @@
         "codecvt": "cpp",
         "forward_list": "cpp",
         "*.lxx": "cpp",
-        "typeindex": "cpp"
+        "typeindex": "cpp",
+        "filesystem": "cpp"
     }
 }
