@@ -23,6 +23,7 @@ objects:
 $(PLUGINOBJS): %.o: %.cpp
 	$(CXX) -c -fPIC $< -o $@
 	$(CXX) -shared $@ Core.o -o $(PLUGINPATH)$(notdir $(basename $@)).so 
+	MetaDataTest/metaDataCreator $(PLUGINPATH)$(notdir $(basename $@)).so
 	
 plugins:  $(PLUGINOBJS)
 

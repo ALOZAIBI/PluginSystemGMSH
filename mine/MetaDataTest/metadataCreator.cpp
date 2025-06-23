@@ -127,20 +127,20 @@ int main(int argc, char* argv[]) {
         std::cerr << "Usage: " << argv[0] << " <path_to_plugin>" << std::endl;
         return 1;
     }
-    std::string pluginPath = "../Plugins/";
+    // std::string pluginPath = "../Plugins/";
     //Concat the path to the plugin
-    pluginPath += argv[1];
+    // argv[1];
 
     char* author, * version, * description, * category, * keywords;
     std::string functionsJson;
 
     //Call the getMetaData function
-    getMetaData(pluginPath, author, version, description, category, keywords,functionsJson);    
+    getMetaData(argv[1], author, version, description, category, keywords,functionsJson);    
 
     std::vector<std::string> keywordsVector = convertToStringArray(keywords);
 
     //Create the meta file
-    createMetaFile(author, version, description, category, keywordsVector, functionsJson, pluginPath);
+    createMetaFile(author, version, description, category, keywordsVector, functionsJson, argv[1]);
     
     
 
