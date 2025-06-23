@@ -1,3 +1,9 @@
+#define AUTHOR "The Author"
+#define VERSION "0.0.0"
+#define DESCRIPTION "No description provided"
+#define CATEGORY "Uncategorized"
+#define KEYWORDS "Keyword1,Keyword2,Keyword3"
+
 #include "EventPlugin.h"
 #include <iostream>
 

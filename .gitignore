@@ -3,3 +3,4 @@ mine/undoStack
 *.so
 *.o
 *main
+*.meta

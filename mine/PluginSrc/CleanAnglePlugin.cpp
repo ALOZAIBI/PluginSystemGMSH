@@ -1,3 +1,9 @@
+#define AUTHOR "Ibrahim"
+#define VERSION "0.2.1"
+#define DESCRIPTION "This removes angles out of range"
+#define CATEGORY "Mesh Cleaning"
+#define KEYWORDS "Angle, Remove"
+
 #include "CleanAnglePlugin.h"
 #include "../../api/gmsh.h"
 
