@@ -5,6 +5,10 @@
 #include "dlfcn.h"
 #include <iostream>
 #include <filesystem>
+#include <fstream>
+
+//For cleaner output
+#include<iomanip>
 
 
 namespace fs = filesystem;
@@ -22,22 +26,87 @@ PluginManager *PluginManager::getInstance() {
     return instance;
 }
 
-vector<string> PluginManager::viewPlugins() {
+//Prints the different parts of the output table with a width
+template<typename T> void printElement(T t,const int& width){
+    cout << left << setw(width-1) << setfill(' ') << t << "|";
+}
+
+
+//Prints the plugin and its metadata
+void viewPlugin(fs::directory_entry entry,int index){
+    //Gets the metaData for the file
+    json jMetaData;
+    ifstream metaDataFile(entry.path().string() + ".meta");
+    if (!metaDataFile.is_open()) {
+        cerr << "Error opening metadata file for plugin: " << entry.path().string() << endl;
+        return;
+    }
+    try{
+    jMetaData = json::parse(metaDataFile);
+    } catch (const json::parse_error& e) {
+        cerr << "Error parsing JSON: " << e.what() << endl;
+        // return;
+    }
+    
+    string indexOutput = YELLOW + to_string(index) + " "+RESET;
+    //Prints the index
+    printElement(indexOutput, 3);
+    //Prints the plugin name
+    printElement(entry.path().filename().string(), 30);
+    //Prints the category
+    printElement(jMetaData["category"].get<string>(), 20);
+    //Prints the author
+    printElement(jMetaData["author"].get<string>(), 20);
+    //Prints the version
+    printElement(jMetaData["version"].get<string>(), 8);
+    //Prints the description
+    printElement(jMetaData["description"].get<string>(), 80);
+    cout << endl;
+}
+
+vector<string> PluginManager::viewPlugins(){
+    //Prints the first row
+    printElement("Ix", 3);
+    printElement("Plugin Name", 30);
+    printElement("Category", 20);
+    printElement("Author", 20);
+    printElement("Ver.", 8);
+    printElement("Description", 80);
+    cout << endl;
+
+    //To print index of plugins
+    int count = 0;
+    //Prints the plugins
     vector<string> filenames;
     if (fs::exists(pathToPlugins) && fs::is_directory(pathToPlugins)) {
-        for (const auto& entry : fs::directory_iterator(pathToPlugins)) {
-            if (fs::is_regular_file(entry.status())) {
+        for (fs::directory_entry entry : fs::directory_iterator(pathToPlugins)) {
+            //Check if the entry is a regular file and if it has a .so extension
+            if (fs::is_regular_file(entry.status()) && entry.path().extension() == ".so") {
+                count++;
                 filenames.push_back(entry.path().filename().string());
+                viewPlugin(entry,count);
             }
         }
     }
-    int count = 0;
-    for (const string& filename : filenames) {
-        count++;
-        cout << YELLOW << count << RESET << ". " << filename << endl;
-    }
     return filenames;
 }
+
+// vector<string> PluginManager::viewPlugins() {
+//     vector<string> filenames;
+//     if (fs::exists(pathToPlugins) && fs::is_directory(pathToPlugins)) {
+//         for (const auto& entry : fs::directory_iterator(pathToPlugins)) {
+//             if (fs::is_regular_file(entry.status())) {
+//                 filenames.push_back(entry.path().filename().string());
+//             }
+//         }
+//     }
+//     int count = 0;
+//     for (const string& filename : filenames) {
+//         count++;
+//         cout << YELLOW << count << RESET << ". " << filename << endl;
+//     }
+//     return filenames;
+// }
 
 ffi_type* PluginManager::stringToType(const string& typeName) {
     if (typeName == "int") {
