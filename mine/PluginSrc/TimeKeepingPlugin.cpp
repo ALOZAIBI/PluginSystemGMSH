@@ -1,8 +1,8 @@
-#define AUTHOR "The Author"
-#define VERSION "0.0.0"
-#define DESCRIPTION "No description provided"
-#define CATEGORY "Uncategorized"
-#define KEYWORDS "Keyword1,Keyword2,Keyword3"
+#define AUTHOR "Ibrahim AL OZAIBI"
+#define VERSION "0.1"
+#define DESCRIPTION "Tells you how long this plugin has been imported"
+#define CATEGORY "Misc"
+#define KEYWORDS "Time,Data"
 
 #include "TimeKeepingPlugin.h"
 #include <iostream>

@@ -115,7 +115,7 @@ int createMetaFile(const char* author, char* version, char* description, char* c
     std::cout << "Author: " << (author ? author : "null") << std::endl;
     //Create a json object from the metadata
     json metadata;
-    metadata["author"] = "author";
+    metadata["author"] = author;
     metadata["version"] = version;
     metadata["description"] = description;
     metadata["category"] = category;
