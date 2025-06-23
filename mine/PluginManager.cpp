@@ -61,6 +61,8 @@ void viewPlugin(fs::directory_entry entry,int index){
     printElement(jMetaData["version"].get<string>(), 8);
     //Prints the description
     printElement(jMetaData["description"].get<string>(), 80);
+    //Prints the modification date
+    printElement(jMetaData["modifDate"].get<string>(),25);
     cout << endl;
 }
 
@@ -72,6 +74,7 @@ vector<string> PluginManager::viewPlugins(){
     printElement("Author", 20);
     printElement("Ver.", 8);
     printElement("Description", 80);
+    printElement("Last Modif Time", 25);
     cout << endl;
 
     //To print index of plugins
