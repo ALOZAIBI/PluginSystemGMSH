@@ -27,22 +27,17 @@
 
 
 extern "C"{
-    //-----------To Create MetaData-----------------
-    std::string getCreator();
-    std::string getVersion();
-    std::string getDescription();
-    std::string getCategory();
-    std::string getKeyWords();
-    //Returns Json with plugin name, function names, arguments, return type
-    std::string getFunctions();
-    //Initializes Plugin variables if needed
-    void initializePlugin();
-
+    //-----------MetaData-----------------
     char author[] = AUTHOR;
     char version[] = VERSION;
     char description[] = DESCRIPTION;
     char category[] = CATEGORY;
     char keywords[] = KEYWORDS;
+    //Returns Json with plugin name, function names, arguments, return type
+    std::string getFunctions();
+    //Initializes Plugin variables if needed
+    void initializePlugin();
+
 }
 
 #endif

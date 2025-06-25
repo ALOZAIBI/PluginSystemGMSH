@@ -68,6 +68,7 @@ void viewPlugin(fs::directory_entry entry,int index){
 
 vector<string> PluginManager::viewPlugins(){
     //Prints the first row
+    cout << BOLDWHITE;
     printElement("Ix", 3);
     printElement("Plugin Name", 30);
     printElement("Category", 20);
@@ -75,7 +76,7 @@ vector<string> PluginManager::viewPlugins(){
     printElement("Ver.", 8);
     printElement("Description", 80);
     printElement("Last Modif Time", 25);
-    cout << endl;
+    cout <<  RESET << endl;
 
     //To print index of plugins
     int count = 0;
@@ -93,23 +94,6 @@ vector<string> PluginManager::viewPlugins(){
     }
     return filenames;
 }
-
-// vector<string> PluginManager::viewPlugins() {
-//     vector<string> filenames;
-//     if (fs::exists(pathToPlugins) && fs::is_directory(pathToPlugins)) {
-//         for (const auto& entry : fs::directory_iterator(pathToPlugins)) {
-//             if (fs::is_regular_file(entry.status())) {
-//                 filenames.push_back(entry.path().filename().string());
-//             }
-//         }
-//     }
-//     int count = 0;
-//     for (const string& filename : filenames) {
-//         count++;
-//         cout << YELLOW << count << RESET << ". " << filename << endl;
-//     }
-//     return filenames;
-// }
 
 ffi_type* PluginManager::stringToType(const string& typeName) {
     if (typeName == "int") {
