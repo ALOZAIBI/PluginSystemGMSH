@@ -14,7 +14,7 @@
 #define DARKRED "\033[38;5;124m"      /* Dark Red */
 #define DARKGREEN "\033[38;5;22m"      /* Dark Green */
 
-#define BOLDBLACK   "\033[1m\033[37m"      /* Bold Black */ //"\033[1m\033[30m"
+#define BOLDBLACK   "\033[1m\033[30m"      /* Bold Black */ //
 #define BOLDRED     "\033[1m\033[31m"      /* Bold Red */
 #define BOLDGREEN   "\033[1m\033[32m"      /* Bold Green */
 #define BOLDYELLOW  "\033[1m\033[33m"      /* Bold Yellow */

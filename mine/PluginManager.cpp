@@ -68,7 +68,7 @@ void viewPlugin(fs::directory_entry entry,int index){
 
 vector<string> PluginManager::viewPlugins(){
     //Prints the first row
-    cout << BOLDWHITE;
+    cout << BOLDBLACK;
     printElement("Ix", 3);
     printElement("Plugin Name", 30);
     printElement("Category", 20);

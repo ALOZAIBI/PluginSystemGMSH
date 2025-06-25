@@ -19,11 +19,11 @@ sources:
 
 objects:
 #   Creates objects so that the .so can use them
-	$(CXX) -c -fPIC Core.cpp -o Core.o
+	$(CXX) -c -fPIC -shared Core.cpp -o Core.so
 
 $(PLUGINOBJS): %.o: %.cpp
 	$(CXX) -c -fPIC $< -o $@
-	$(CXX) -shared $@ Core.o -o $(PLUGINPATH)$(notdir $(basename $@)).so 
+	$(CXX) -shared $@ Core.so -o $(PLUGINPATH)$(notdir $(basename $@)).so 
 #	Gives the .so and the .cpp of the plugin as arguments to metaDataCreator
 #	the .cpp is given to extract last modified time
 	MetaDataTest/metaDataCreator $(PLUGINPATH)$(notdir $(basename $@)).so $(PLUGINSRCPATH)$(notdir $(basename $@)).cpp
