@@ -29,15 +29,14 @@ void inputHandler(args* a){
     }
 }
 
-Core* Core::instance = nullptr;
+std::shared_ptr<Core> Core::instance = nullptr;
 
-Core* Core::getInstance() {
-    if (instance == nullptr) {
-        instance = new Core();
+std::shared_ptr<Core> Core::getInstance() {
+    if(instance == nullptr){
+        instance = std::make_shared<Core>();
     }
     return instance;
 }
-
 
 int Core::takeInt(std::string msg) {
     std::cout << BOLDBLACK << msg << BLUE;

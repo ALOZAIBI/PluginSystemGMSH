@@ -34,6 +34,12 @@ template<typename T> void printElement(T t,const int& width){
 
 //Prints the plugin and its metadata
 void viewPlugin(fs::directory_entry entry,int index){
+    string indexOutput = YELLOW + to_string(index) + " "+RESET;
+    //Prints the index
+    printElement(indexOutput, 3);
+    //Prints the plugin name
+    printElement(entry.path().filename().string(), 30);
+
     //Gets the metaData for the file
     json jMetaData;
     ifstream metaDataFile(entry.path().string() + ".meta");
@@ -45,14 +51,10 @@ void viewPlugin(fs::directory_entry entry,int index){
     jMetaData = json::parse(metaDataFile);
     } catch (const json::parse_error& e) {
         cerr << "Error parsing JSON: " << e.what() << endl;
-        // return;
+        return;
     }
     
-    string indexOutput = YELLOW + to_string(index) + " "+RESET;
-    //Prints the index
-    printElement(indexOutput, 3);
-    //Prints the plugin name
-    printElement(entry.path().filename().string(), 30);
+
     //Prints the category
     printElement(jMetaData["category"].get<string>(), 20);
     //Prints the author
