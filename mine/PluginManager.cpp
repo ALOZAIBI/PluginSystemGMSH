@@ -142,6 +142,10 @@ vector <string> PluginManager::fetchParamNames(const json& jFunction) {
 void PluginManager::fetchFunctions(void* handle) {
     //Get the getFunctions function from the plugin
     string (*getFunctions)() = (string(*)())dlsym(handle, "getFunctions");
+    if (!getFunctions) {
+        cerr << "Cannot find getFunctions function: " << dlerror() << endl;
+        return;
+    }
     json j;
     try {
         //Get the function signatures in json format
@@ -217,7 +221,14 @@ void PluginManager::importPlugin(){
         cerr << "Cannot open library: " << dlerror() << endl;
         return;
     }
-    fetchFunctions(handle);
+    try{
+        fetchFunctions(handle);
+    }
+    catch (const std::exception& e) {
+        cerr << "Error in fetchFunctions: " << e.what() << endl;
+        dlclose(handle);
+        return;
+    }
     //We initialize the plugin after fetching the functions
     void (*initializePlugin)() = (void(*)())dlsym(handle, "initializePlugin");
     if (!initializePlugin) {

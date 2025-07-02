@@ -45,14 +45,23 @@ public:
      */
     std::deque<char> undoStack;
 
-    int takeInt(std::string msg = "");
-    std::string takeString(std::string msg = "");
-    float takeFloat(std::string msg = "");
+    //Takes input from user
+    int takeInt(const std::string& msg = "") const;
+    std::string takeString(const std::string& msg = "") const;
+    float takeFloat(const std::string& msg = "") const;
+    //Take input variant that can work with rust
 
+    //To test cxx
+    void helloWorld() const;
     void undo();
     void redo();
 };
 
+//Non member getInstance function, so that we can use it in Rust
+std::shared_ptr<Core> getCoreInstance();
 
-
+//This functions returns an empty string.
+//This is needed so that Rust can return strings
+//CxxString is opaque in rust so it can't return it 
+std::unique_ptr<std::string> get_empty_string();
 #endif

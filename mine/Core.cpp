@@ -38,7 +38,15 @@ std::shared_ptr<Core> Core::getInstance() {
     return instance;
 }
 
-int Core::takeInt(std::string msg) {
+std::shared_ptr<Core> getCoreInstance() {
+    return Core::getInstance();
+}
+
+std::unique_ptr<std::string> get_empty_string(){
+    return std::make_unique<std::string>("");
+}
+
+int Core::takeInt(const std::string& msg) const{
     std::cout << BOLDBLACK << msg << BLUE;
     int num;
     std::cin >> num;
@@ -46,7 +54,7 @@ int Core::takeInt(std::string msg) {
     return num;
 }
 
-std::string Core::takeString(std::string msg) {
+std::string Core::takeString(const std::string& msg) const {
     std::cout << BOLDBLACK << msg << BLUE;
     std::string str;
     std::cin >> str;
@@ -54,12 +62,16 @@ std::string Core::takeString(std::string msg) {
     return str;
 }
 
-float Core::takeFloat(std::string msg) {
+float Core::takeFloat(const std::string& msg) const{
     std::cout << BOLDBLACK << msg << BLUE;
     float num;
     std::cin >> num;
     std::cout << RESET;
     return num;
+}
+
+void Core::helloWorld() const {
+    std::cout << "Hello World from Core!" << std::endl;
 }
 
 void Core::printStack() {
