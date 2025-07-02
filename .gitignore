@@ -5,3 +5,4 @@ mine/undoStack
 *main
 *.meta
 metaDataCreator
+*target*

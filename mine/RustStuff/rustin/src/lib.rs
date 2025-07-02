@@ -8,8 +8,17 @@ pub extern "C" fn getFunctions() -> UniquePtr<CxxString> {
         //we will use get_empty_string function from Core.h
         //Then modify that string and return it
         let mut msg = get_empty_string();
+
+        println!("getFunctions called from Rust");
+        let json = r#"
+        {
+            "functions":[
+                {"name": "addition", "returns":"void", "args":["int","int"], "argNames":["First num","Second num"], "event":[], "description":""}
+            ]
+        }
+        "#;
         //Now we can modify the string
-        msg.pin_mut().push_str("Hello from Rust Plugin!\n");    
+        msg.pin_mut().push_str(json);    
 
         return msg;
 
@@ -25,6 +34,11 @@ pub extern "C" fn initializePlugin(){
     let_cxx_string!(msg ="Enter a number from core:");
     let num = core.takeInt(&msg);
     println!("Number from core: {}", num);
+}
+
+#[unsafe(no_mangle)]
+pub extern "C" fn addition(a: i32, b: i32) {
+    println!("Addition called with {} and {} result is = {}", a, b, a + b);
 }
 
 
