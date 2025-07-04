@@ -5,6 +5,7 @@ pub mod ffi {
         //Include the header file
         //No Need to give the ful path cuz in build.rs we specify the include directory
         include!("Core.h");
+        include!("gmshFacade.h");
 
         type Core;
 
@@ -16,7 +17,7 @@ pub mod ffi {
         //Options separated by commas
         fn promptSelectionStringAlt(self: &Core, options: &CxxString, msg: &CxxString) -> i32;
 
-        fn get_empty_string() -> UniquePtr<CxxString>;
+        fn addRect(width: f32, height: f32);
 
         // fn take_int(msg: &CxxString) -> i32;
     }

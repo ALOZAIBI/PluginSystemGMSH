@@ -11,3 +11,4 @@ cxx-build = "1.0"
 
 [lib]
 crate-type = ["cdylib"]
+path = "src/iga.rs"

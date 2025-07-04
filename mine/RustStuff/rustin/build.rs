@@ -7,9 +7,11 @@ fn main(){
     println!("cargo:rerun-if-changed=src/core_interface.rs");
     println!("cargo:rerun-if-changed=src/lib.rs");
     println!("cargo:rerun-if-changed=../../Core.cpp");
+    println!("cargo:rerun-if-changed=../../gmshFacade.cpp");
 
     //Link it to the Core shared library
     println!("cargo:rustc-link-lib=Core");
+    println!("cargo:rustc-link-lib=gmshFacade");
     println!("cargo:rustc-link-search=native=../../");
 
 }

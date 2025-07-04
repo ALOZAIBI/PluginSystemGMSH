@@ -45,8 +45,6 @@ class PluginManager{
         //This will be called inside some plugin's initializePlugin function, so the last plugin in the functions vector will be the one that gets hooked to the event
         void subscribeToEvent(const string& eventName);
 
-        
-
         //Calls function when event is triggered
         void callEventFunctions(const string& eventName);
 };

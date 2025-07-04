@@ -20,6 +20,7 @@ sources:
 objects:
 #   Creates objects so that the .so can use them
 	$(CXX) -c -fPIC -shared Core.cpp -o libCore.so
+	$(CXX) -c -fPIC -shared gmshFacade.cpp -o libgmshFacade.so
 
 $(PLUGINOBJS): %.o: %.cpp
 	$(CXX) -c -fPIC $< -o $@
