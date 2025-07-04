@@ -9,6 +9,11 @@
 using json = nlohmann::json;
 
 using namespace std;
+
+struct functionAndName{
+    string name;
+    void(*function)();
+};
 class PluginManager{
     private:
         //Path to the plugins
@@ -19,34 +24,30 @@ class PluginManager{
         //View the plugins to be imported
         vector<string> viewPlugins();   
 
-        //Map ("functionName", functionSignature) for the functions, will be used when functions are manually called
-        map<string, shared_ptr<functionSignature>> functionMap;
+        vector<functionAndName> functions; //Vector of functions and their names
 
-        //Map ("eventName", listOffunctionSignatures) for the events, will be used when events are triggered
-        map<string, vector<shared_ptr<functionSignature>>> eventMap;
+        //Event map to reconsider implementation maybe this will be filled by the plugin in initializePlugin
+        // //Map ("eventName", function) for the events, will be used when events are triggered
+        // map<string, vector<void(*)()> eventMap;
 
-        //Gets the functions from the plugin, then fills them in functions
-        void fetchFunctions(void* handle);
+        //Will simply fetch execute()
+        // //Gets the functions from the plugin, then fills them in functions
+        // void fetchFunctions(void* handle);
         
         //To be used in get Functions
         //Gets the parameter types
-        ffi_type* stringToType(const string& typeName);
-
-        vector<ffi_type*> fetchParamTypes(const json& jFunction);
-        
-        vector<string> fetchParamNames(const json& jFunction);
         
     public:
         static PluginManager* getInstance();
 
-        //Adds to list of plugins, translates JSON then adds to functions
+        //Adds a plugin to pluginMap
         void importPlugin();
 
-        //Prints the functions and their description
-        void viewFunctions();
+        //Prints the names of the plugins inside the pluginMap
+        void viewImportedPlugins();
 
-        //call function (The return type is set inside this function)
-        retVariant callFunction();
+        //call function after viewing the possible plugins
+        void callFunction();
 
         //Calls function when event is triggered
         void callEventFunctions(const string& eventName);

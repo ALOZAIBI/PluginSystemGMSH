@@ -4,7 +4,7 @@
 
 extern "C"{
     void addRect();
-    void addRectWH(float width,float height);
+    void addRectWH();
     void addCone();
 }
 #endif

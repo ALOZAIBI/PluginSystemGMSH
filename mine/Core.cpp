@@ -70,6 +70,20 @@ float Core::takeFloat(const std::string& msg) const{
     return num;
 }
 
+int Core::promptSelection(const std::vector<std::string>& options, const std::string& msg) const {
+    std::cout << BOLDBLACK << msg << std::endl;
+    for (size_t i = 0; i < options.size(); ++i) {
+        std::cout << YELLOW << i + 1 << RESET<< ". " << options[i] << std::endl;
+    }
+    int choice = takeInt("Select an option: ");
+    if (choice < 1 || choice > static_cast<int>(options.size())) {
+        std::cout << RED << "Invalid choice. Please try again." << RESET << std::endl;
+        return 0;
+    }
+    std::cout << RESET;
+    return choice - 1; // Return zero-based index
+}
+
 void Core::helloWorld() const {
     std::cout << "Hello World from Core!" << std::endl;
 }

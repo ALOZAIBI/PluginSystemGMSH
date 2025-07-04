@@ -6,25 +6,37 @@
 
 #include "AddGeometryPlugin.h"
 #include "../../api/gmsh.h"
+#include "../Core.h"
 #include <iostream>
 
-std::string getFunctions(){
-    return R"(
-        {
-            "functions":[
-                {"name": "addRect", "returns":"void", "args":[],"event":[], "description":""},
-                {"name": "addRectWH", "returns":"void", "args":["float","float"], "argNames":["Width","Height"],"event":[], "description":""},
-                {"name": "addCone", "returns":"void", "args":[],"event":[], "description":""}
-            ]
-        }
-    )";
-}
 
 void initializePlugin(){
     // std::cout << "AddBoxPlugin initialized" << std::endl;
 }
 
-void addRectWH(float width,float height){
+void execute(){
+
+    int choice = Core::getInstance()->promptSelection({"Add Default Rectangle", "Add Rectangle with Width and Height", "Add Cone"}, "Choose a function:");
+    switch(choice){
+        case 0:
+            addRect();
+            break;
+        case 1:
+            addRectWH();
+            break;
+        case 2:
+            addCone();
+            break;
+        default:
+            std::cout << "Invalid choice." << std::endl;
+            return;
+    }
+}
+
+void addRectWH(){
+    float width = Core::getInstance()->takeFloat("Enter width of rectangle: ");
+    float height = Core::getInstance()->takeFloat("Enter height of rectangle: ");
+
     double lc = 1e-2;
     int p1 = gmsh::model::geo::addPoint(0, 0, 0, lc);
     int p2 = gmsh::model::geo::addPoint(width, 0, 0, lc);

@@ -33,10 +33,12 @@ extern "C"{
     char description[] = DESCRIPTION;
     char category[] = CATEGORY;
     char keywords[] = KEYWORDS;
-    //Returns Json with plugin name, function names, arguments, return type
-    std::string getFunctions();
+
     //Initializes Plugin variables if needed
     void initializePlugin();
+
+    //Does the plugin function
+    void execute();
 
 }
 

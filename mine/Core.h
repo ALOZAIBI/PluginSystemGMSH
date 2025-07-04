@@ -49,6 +49,8 @@ public:
     int takeInt(const std::string& msg = "") const;
     std::string takeString(const std::string& msg = "") const;
     float takeFloat(const std::string& msg = "") const;
+
+    int promptSelection(const std::vector<std::string>& options, const std::string& msg = "") const;
     //Take input variant that can work with rust
 
     //To test cxx

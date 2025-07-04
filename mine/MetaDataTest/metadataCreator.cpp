@@ -137,30 +137,30 @@ int createMetaFile(const char* author, char* version, char* description, char* c
 }
 int main(int argc, char* argv[]) {
     
-    //Dlopen the file given by the user
-    if (argc < 2) {
-        std::cerr << "Usage: " << argv[0] << " <path_to_plugin.so> <path_to_plugin.cpp>" << std::endl;
-        return 1;
-    }
-    fs::path p = fs::path(argv[2]);
-    fs::file_time_type lastWriteTime = fs::last_write_time(p);
+    // //Dlopen the file given by the user
+    // if (argc < 2) {
+    //     std::cerr << "Usage: " << argv[0] << " <path_to_plugin.so> <path_to_plugin.cpp>" << std::endl;
+    //     return 1;
+    // }
+    // fs::path p = fs::path(argv[2]);
+    // fs::file_time_type lastWriteTime = fs::last_write_time(p);
     
-    std::time_t lastWriteTimeT = to_time_t(lastWriteTime);
-    char* timeStr = std::ctime(&lastWriteTimeT);
-    size_t len = std::strlen(timeStr);
-    if (len > 0 && timeStr[len - 1] == '\n') {
-        timeStr[len - 1] = '\0';
-    }
-    char* author, * version, * description, * category, * keywords;
-    std::string functionsJson;
+    // std::time_t lastWriteTimeT = to_time_t(lastWriteTime);
+    // char* timeStr = std::ctime(&lastWriteTimeT);
+    // size_t len = std::strlen(timeStr);
+    // if (len > 0 && timeStr[len - 1] == '\n') {
+    //     timeStr[len - 1] = '\0';
+    // }
+    // char* author, * version, * description, * category, * keywords;
+    // std::string functionsJson;
 
-    //Call the getMetaData function
-    getMetaData(argv[1], author, version, description, category, keywords,functionsJson);    
+    // //Call the getMetaData function
+    // getMetaData(argv[1], author, version, description, category, keywords,functionsJson);    
 
-    std::vector<std::string> keywordsVector = convertToStringArray(keywords);
+    // std::vector<std::string> keywordsVector = convertToStringArray(keywords);
 
-    //Create the meta file
-    createMetaFile(author, version, description, category, keywordsVector, functionsJson, timeStr,argv[1]);
+    // //Create the meta file
+    // createMetaFile(author, version, description, category, keywordsVector, functionsJson, timeStr,argv[1]);
     
     
 
