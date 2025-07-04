@@ -45,20 +45,28 @@ public:
      */
     std::deque<char> undoStack;
 
-    //Takes input from user
     int takeInt(const std::string& msg = "") const;
     std::string takeString(const std::string& msg = "") const;
     float takeFloat(const std::string& msg = "") const;
 
+    /**
+     * @brief Prompts the user to select an option from a list, returns the option
+     * @param options A vector of strings representing the options to choose from.
+     * @param msg A message to display before the options.
+     * @returns The index of the selected option, or -1 if the input is invalid.
+     */
     int promptSelection(const std::vector<std::string>& options, const std::string& msg = "") const;
     
-    //Options written as a string, separated by commas
+    /**
+     * @brief Prompts the user to select an option from a comma-separated string of options.
+     * @param options A string containing options separated by commas.
+     * @param msg A message to display before the options.
+     * @returns The index of the selected option, or -1 if the input is invalid
+     * @note This function is an alternative to promptSelection to facilitate interop with rust
+     */
     int promptSelectionStringAlt(const std::string& options, const std::string& msg = "") const;    
     
-    //Take input variant that can work with rust
 
-    //To test cxx
-    void helloWorld() const;
     void undo();
     void redo();
 };
@@ -66,8 +74,4 @@ public:
 //Non member getInstance function, so that we can use it in Rust
 std::shared_ptr<Core> getCoreInstance();
 
-//This functions returns an empty string.
-//This is needed so that Rust can return strings
-//CxxString is opaque in rust so it can't return it 
-std::unique_ptr<std::string> get_empty_string();
 #endif

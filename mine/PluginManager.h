@@ -29,13 +29,6 @@ class PluginManager{
         //Event map to reconsider implementation maybe this will be filled by the plugin in initializePlugin through a subscribe function
         //Map ("eventName", function) for the events, will be used when events are triggered
         map<string, vector<void(*)()>> eventMap;
-
-        //Will simply fetch execute()
-        // //Gets the functions from the plugin, then fills them in functions
-        // void fetchFunctions(void* handle);
-        
-        //To be used in get Functions
-        //Gets the parameter types
         
     public:
         static PluginManager* getInstance();
