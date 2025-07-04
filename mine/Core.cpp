@@ -84,10 +84,17 @@ int Core::promptSelection(const std::vector<std::string>& options, const std::st
     return choice - 1; // Return zero-based index
 }
 
-void Core::helloWorld() const {
-    std::cout << "Hello World from Core!" << std::endl;
+//User enters the options as a single string separated by commas
+int Core::promptSelectionStringAlt(const std::string& options, const std::string& msg) const{
+    //Split the options by commas and store them in a vector
+    std::vector<std::string> optionList;
+    std::stringstream ss(options);
+    std::string option;
+    while (std::getline(ss, option, ',')) {
+        optionList.push_back(option);
+    }
+    return promptSelection(optionList, msg);
 }
-
 void Core::printStack() {
     //Print the current position in the stack
     for (int i = 0; i<= undoStack.size(); i++) {

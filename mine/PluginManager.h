@@ -26,9 +26,9 @@ class PluginManager{
 
         vector<functionAndName> functions; //Vector of functions and their names
 
-        //Event map to reconsider implementation maybe this will be filled by the plugin in initializePlugin
-        // //Map ("eventName", function) for the events, will be used when events are triggered
-        // map<string, vector<void(*)()> eventMap;
+        //Event map to reconsider implementation maybe this will be filled by the plugin in initializePlugin through a subscribe function
+        //Map ("eventName", function) for the events, will be used when events are triggered
+        map<string, vector<void(*)()>> eventMap;
 
         //Will simply fetch execute()
         // //Gets the functions from the plugin, then fills them in functions
@@ -48,6 +48,11 @@ class PluginManager{
 
         //call function after viewing the possible plugins
         void callFunction();
+
+        //This will be called inside some plugin's initializePlugin function, so the last plugin in the functions vector will be the one that gets hooked to the event
+        void subscribeToEvent(const string& eventName);
+
+        
 
         //Calls function when event is triggered
         void callEventFunctions(const string& eventName);

@@ -9,8 +9,13 @@ pub mod ffi {
         type Core;
 
         fn getCoreInstance() -> SharedPtr<Core>;
-        fn helloWorld(self: &Core);
+        
         fn takeInt(self: &Core, msg: &CxxString) -> i32;
+        fn takeFloat(self: &Core, msg: &CxxString) -> f32;
+
+        //Options separated by commas
+        fn promptSelectionStringAlt(self: &Core, options: &CxxString, msg: &CxxString) -> i32;
+
         fn get_empty_string() -> UniquePtr<CxxString>;
 
         // fn take_int(msg: &CxxString) -> i32;

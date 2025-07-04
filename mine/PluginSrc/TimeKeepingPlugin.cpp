@@ -5,6 +5,7 @@
 #define KEYWORDS "Time,Data"
 
 #include "TimeKeepingPlugin.h"
+#include "../PluginManager.h"
 #include <iostream>
 
 time_t startTime = 0;
@@ -12,17 +13,11 @@ time_t startTime = 0;
 
 void initializePlugin() {
     setStartTime();
+    PluginManager::getInstance()->subscribeToEvent("onInput");
 }
 
-std::string getFunctions() {
-    return R"(
-        {
-            "functions":[
-                {"name": "setStartTime", "returns":"void", "args":[],"event":[], "description":"Sets the start time"},
-                {"name": "elapsedTime", "returns":"void", "args":[],"event":["onInput"], "description":"Prints the elapsed time since start"}
-            ]
-        }
-    )";
+void execute() {
+    elapsedTime();
 }
 
 void setStartTime() {

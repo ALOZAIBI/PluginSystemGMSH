@@ -137,8 +137,19 @@ void PluginManager::importPlugin(){
     initializePlugin();
 }
 
+void PluginManager::subscribeToEvent(const string& eventName) {
+    eventMap[eventName].push_back(functions.back().function);
+}
+
+//Calls all functions hooked to eventName
 void PluginManager::callEventFunctions(const string& eventName){
-    //Nothing for now
+    auto it = eventMap.find(eventName);
+    if(it != eventMap.end()){
+        for  (const auto& function : it->second) {
+            //Call the function
+            function();
+        }
+    }
 }
 
 

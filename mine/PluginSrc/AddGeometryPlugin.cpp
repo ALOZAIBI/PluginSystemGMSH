@@ -16,7 +16,8 @@ void initializePlugin(){
 
 void execute(){
 
-    int choice = Core::getInstance()->promptSelection({"Add Default Rectangle", "Add Rectangle with Width and Height", "Add Cone"}, "Choose a function:");
+    int choice = Core::getInstance()->promptSelection({"Default Rectangle", "Rectangle  Width and Height", "Cone"}, "Choose a function:");
+
     switch(choice){
         case 0:
             addRect();

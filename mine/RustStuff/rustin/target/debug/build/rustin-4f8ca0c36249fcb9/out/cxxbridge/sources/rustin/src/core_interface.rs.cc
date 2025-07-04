@@ -13,14 +13,19 @@ void cxxbridge1$getCoreInstance(::std::shared_ptr<::Core> *return$) noexcept {
   new (return$) ::std::shared_ptr<::Core>(getCoreInstance$());
 }
 
-void cxxbridge1$Core$helloWorld(::Core const &self) noexcept {
-  void (::Core::*helloWorld$)() const = &::Core::helloWorld;
-  (self.*helloWorld$)();
-}
-
 ::std::int32_t cxxbridge1$Core$takeInt(::Core const &self, ::std::string const &msg) noexcept {
   ::std::int32_t (::Core::*takeInt$)(::std::string const &) const = &::Core::takeInt;
   return (self.*takeInt$)(msg);
+}
+
+float cxxbridge1$Core$takeFloat(::Core const &self, ::std::string const &msg) noexcept {
+  float (::Core::*takeFloat$)(::std::string const &) const = &::Core::takeFloat;
+  return (self.*takeFloat$)(msg);
+}
+
+::std::int32_t cxxbridge1$Core$promptSelectionStringAlt(::Core const &self, ::std::string const &options, ::std::string const &msg) noexcept {
+  ::std::int32_t (::Core::*promptSelectionStringAlt$)(::std::string const &, ::std::string const &) const = &::Core::promptSelectionStringAlt;
+  return (self.*promptSelectionStringAlt$)(options, msg);
 }
 
 ::std::string *cxxbridge1$get_empty_string() noexcept {

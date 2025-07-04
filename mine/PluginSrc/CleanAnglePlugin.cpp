@@ -6,20 +6,18 @@
 
 #include "CleanAnglePlugin.h"
 #include "../../api/gmsh.h"
+#include "../Core.h"
 
 #include <iostream>
 #include <map>
 
 using namespace std;
 
-std::string getFunctions() {
-    return R"(
-        {
-            "functions":[
-                {"name": "cleanAngle", "returns":"void", "args":["float","float"],"argNames":["Min Angle","Max Angle"],"event":[], "description":"Clean angles in the model"}
-            ]
-        }
-    )";
+void execute(){
+    //Get the min and max angle
+    float minAngle = Core::getInstance()->takeFloat("Min Angle: ");
+    float maxAngle = Core::getInstance()->takeFloat("Max Angle: ");
+    cleanAngle(minAngle, maxAngle);
 }
 
 void initializePlugin() {
@@ -108,12 +106,6 @@ void removeInvalid(float min,float max,int elementType,const vector<size_t> &elT
         default:
             break;
     }
-    // Print elements to remove
-    cout << "\nElements to remove: ";
-    for(const auto &e : elementsToRemove) {
-        cout << e << " ";
-    }
-    cout <<endl;
 
 
 
