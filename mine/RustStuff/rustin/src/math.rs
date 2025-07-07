@@ -8,7 +8,7 @@ use cxx::{SharedPtr,UniquePtr, let_cxx_string, CxxString};
 #[unsafe(no_mangle)]
 pub extern "C" fn execute(){
 
-    cxx::let_cxx_string!(options = "Addition,Subtraction,Add Rectangle");
+    cxx::let_cxx_string!(options = "Addition,Subtraction");
     cxx::let_cxx_string!(msg = "Select an operation:");
 
     let selection = getCoreInstance().promptSelectionStringAlt(&options, &msg);
@@ -16,7 +16,6 @@ pub extern "C" fn execute(){
     match selection {
         0 => addition(),
         1 => subtraction(),
-        2 => addRectangle(),
         _ => println!("Invalid selection"),
     }
     
@@ -29,18 +28,7 @@ pub extern "C" fn initializePlugin(){
     println!("RUST PLUGIN INITIALIZED");
 }
 
-#[unsafe(no_mangle)]
-pub extern "C" fn addRectangle() {
-    cxx::let_cxx_string!(msgW = "Enter Width:");
-    cxx::let_cxx_string!(msgH = "Enter Height:");
-    let width = getCoreInstance().takeFloat(&msgW);
-    let height = getCoreInstance().takeFloat(&msgH);
-
-    addRect(width, height);
-}
-
-#[unsafe(no_mangle)]
-pub extern "C" fn addition() {
+fn addition() {
     cxx::let_cxx_string!(msgA = "A:");
     cxx::let_cxx_string!(msgB = "B:");
     let a = getCoreInstance().takeInt(&msgA);
@@ -48,8 +36,7 @@ pub extern "C" fn addition() {
     println!("result is = {}",a + b);
 }
 
-#[unsafe(no_mangle)]
-pub extern "C" fn subtraction() {
+fn subtraction() {
     cxx::let_cxx_string!(msgA = "A:");
     cxx::let_cxx_string!(msgB = "B:");
     let a = getCoreInstance().takeInt(&msgA);

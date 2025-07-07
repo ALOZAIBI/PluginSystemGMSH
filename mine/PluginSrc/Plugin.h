@@ -34,10 +34,12 @@ extern "C"{
     char category[] = CATEGORY;
     char keywords[] = KEYWORDS;
 
-    //Initializes Plugin variables if needed
+    /**
+     * @brief Initializes variables, sets up plugin, subscribes to events.
+     * This function is called when the plugin is imported
+     */
     void initializePlugin();
 
-    //Does the plugin function
     void execute();
 
 }

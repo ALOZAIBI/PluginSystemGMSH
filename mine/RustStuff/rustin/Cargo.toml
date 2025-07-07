@@ -1,5 +1,5 @@
 [package]
-name = "rustin"
+name = "template"
 version = "0.1.0"
 edition = "2024"
 
@@ -11,4 +11,4 @@ cxx-build = "1.0"
 
 [lib]
 crate-type = ["cdylib"]
-path = "src/iga.rs"
+path = "src/template.rs"

@@ -14,14 +14,13 @@
 namespace fs = filesystem;
 using namespace std;
 
-PluginManager* PluginManager::instance = nullptr;
+shared_ptr<PluginManager>  PluginManager::instance = nullptr;
 //The constructor
 PluginManager::PluginManager(const string& pathToPlugins) : pathToPlugins(pathToPlugins) {}
 
-PluginManager *PluginManager::getInstance() {
-    if(instance ==  nullptr){
-        //Uses the default value set in .h which is the path to the plugins
-        instance = new PluginManager();
+shared_ptr<PluginManager> PluginManager::getInstance() {
+    if (instance == nullptr) {
+        instance = make_shared<PluginManager>();
     }
     return instance;
 }
@@ -137,7 +136,7 @@ void PluginManager::importPlugin(){
     initializePlugin();
 }
 
-void PluginManager::subscribeToEvent(const string& eventName) {
+void PluginManager::subscribeToEvent(const string& eventName){
     eventMap[eventName].push_back(functions.back().function);
 }
 

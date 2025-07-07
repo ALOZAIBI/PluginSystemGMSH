@@ -1,3 +1,6 @@
+//This is supposed to be filled with all the functions that are to be exposed to rust
+//This is the interface between Rust and C++
+
 #[cxx::bridge]
 pub mod ffi {
     

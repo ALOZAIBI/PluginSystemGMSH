@@ -20,6 +20,7 @@ sources:
 objects:
 #   Creates objects so that the .so can use them
 	$(CXX) -c -fPIC -shared Core.cpp -o libCore.so
+#   The following objects are created so that we can link them to the rust plguins
 	$(CXX) -c -fPIC -shared gmshFacade.cpp -o libgmshFacade.so
 
 $(PLUGINOBJS): %.o: %.cpp
